@@ -1,0 +1,129 @@
+:root {
+  --sky-top: #cfe7f5;
+  --sky-mid: #d6cdf0;
+  --sky-bottom: #c9b6e6;
+  --star-glow: #fef6ff;
+  --jelly-cyan: #9fe8f0;
+  --jelly-pink: #f3b8e6;
+  --jelly-lavender: #c6b3f2;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #d6cdf0;
+  cursor: none;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  position: relative;
+}
+
+/* 天空渐变：浅蓝到浅紫，缓慢流动，营造融合感 */
+.sky {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--sky-top) 0%,
+    var(--sky-mid) 45%,
+    var(--sky-bottom) 100%
+  );
+  background-size: 100% 220%;
+  animation: driftSky 26s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes driftSky {
+  0%   { background-position: 50% 0%; }
+  100% { background-position: 50% 100%; }
+}
+
+/* 跟随鼠标的柔光，加强"交融"的呼吸感 */
+.glow-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 420px;
+  height: 420px;
+  margin-left: -210px;
+  margin-top: -210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.35), rgba(255,255,255,0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  transition: opacity 0.4s ease;
+  will-change: transform;
+}
+
+canvas#universe {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  display: block;
+}
+
+.title {
+  position: fixed;
+  top: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 3;
+  pointer-events: none;
+  color: #5a4a72;
+  opacity: 0;
+  animation: fadeIn 2.5s ease forwards 0.6s;
+}
+
+.title h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(28px, 5vw, 48px);
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 18px rgba(255,255,255,0.6);
+}
+
+.title p {
+  margin-top: 6px;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  opacity: 0.65;
+}
+
+.hint {
+  position: fixed;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  color: #5a4a72;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  opacity: 0;
+  animation: fadeIn 2s ease forwards 1.6s, fadeOut 2s ease forwards 7s;
+  pointer-events: none;
+}
+
+@keyframes fadeIn {
+  to { opacity: 0.7; }
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+@media (max-width: 640px) {
+  .title { top: 4vh; }
+  .glow-cursor { width: 280px; height: 280px; margin-left: -140px; margin-top: -140px; }
+}
